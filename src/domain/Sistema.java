@@ -7,11 +7,11 @@ import javax.swing.Icon;
 
 public class Sistema extends Observable implements Serializable {
 
-    public ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>();
     public ArrayList<Profesional> listaProfesionales = new ArrayList<Profesional>();
     public ArrayList<Alimento> listaAlimentos = new ArrayList<Alimento>();
     public Persistencia persistencia = new Persistencia();
-
+    public ArrayList<Usuario> listaUsuarios = persistencia.leeDatosUsuarios();
+    
     public ArrayList<Usuario> getListaUsuarios() {
         return listaUsuarios;
     }
@@ -37,8 +37,8 @@ public class Sistema extends Observable implements Serializable {
     }
 
     public void agregarUsuario(Usuario usuario) {
-        this.getListaUsuarios().add(usuario);
-        this.persistencia.escribirDatos(usuario);
+        this.persistencia.escribirDatosUsuario(usuario);
+        this.listaUsuarios = persistencia.leeDatosUsuarios();
     }
 
     public boolean registrarUsuario(String nombre, String apellido, String nacionalidad, boolean[] preferencias, boolean[] restricciones, Date nacimiento, String descripcion, Icon icono) {

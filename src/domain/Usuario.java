@@ -76,25 +76,4 @@ public class Usuario extends Persona {
     public String toString() {
         return this.getNombres() + " " + this.getApellidos();
     }
-    
-    public String datosPersistir() {
-        //carnes lacteos frutas verduras otros
-        String strPreferencias = "";
-        for(int i=0; i < preferencias.length; i++) {
-            strPreferencias = strPreferencias.concat(String.valueOf(preferencias[i] ? 1 : 0));
-        }
-        //salado dulce lacteos carnes rojas otros
-        String strRestricciones = "";
-        for (int i=0; i < restricciones.length; i++) {
-            strRestricciones = strRestricciones.concat(String.valueOf(restricciones[i] ? 1 : 0));
-        }
-        return this.getApellidos() + ";" +
-                this.getNombres() + ";" +
-                this.getNacionalidad() + ";" +
-                this.getNacimiento().toString() + ";" +
-                strPreferencias + ";" +
-                strRestricciones + ";" +
-                this.getDescripcion();
-                
-    }
 }
