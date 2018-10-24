@@ -12,7 +12,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DateFormat;
-import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,7 +47,7 @@ public class Persistencia {
                 usuario.getDescripcion().concat(" ") + ";";
     }
 
-    public ArrayList<Usuario> leeDatosUsuarios() {
+    public ArrayList<Usuario> leeUsuarios() {
         String cadena;
         ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>();
         try {
@@ -94,17 +93,18 @@ public class Persistencia {
         return listaUsuarios;
     }
 
-    public void escribirDatosUsuario(Usuario usuario) {
+    public void escribirUsuarios(ArrayList<Usuario> listaUsuarios) {
         File archivo = new File(this.ruta);
         BufferedWriter bw;
         try {
-            bw = new BufferedWriter(new FileWriter(archivo, true));
-            bw.write(datosPersistir(usuario));
-            bw.newLine();
+            bw = new BufferedWriter(new FileWriter(archivo));
+            for(Usuario usuario: listaUsuarios){
+                bw.write(datosPersistir(usuario));
+                bw.newLine();
+            }
             bw.close();
         } catch (IOException ex) {
-            System.out.println("No se guardo el usuario "
-                    + usuario.getApellidos() + " en el archivo");
+            System.out.println("No se realizo el respaldo de los usuarios");
         }
     }
 }
