@@ -7,17 +7,18 @@ import javax.swing.Icon;
 
 public class Sistema extends Observable implements Serializable {
 
-    
-    public ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>();
     public ArrayList<Profesional> listaProfesionales = new ArrayList<Profesional>();
     public ArrayList<Alimento> listaAlimentos = new ArrayList<Alimento>();
-
+    public Persistencia persistencia = new Persistencia();
+    public ArrayList<Usuario> listaUsuarios = persistencia.leeUsuarios();
+    
     public ArrayList<Usuario> getListaUsuarios() {
         return listaUsuarios;
     }
 
     public void setListaUsuarios(ArrayList<Usuario> listaUsuarios) {
         this.listaUsuarios = listaUsuarios;
+        this.persistencia.escribirUsuarios(listaUsuarios);
     }
 
     public ArrayList<Profesional> getListaProfesionales() {
@@ -37,7 +38,8 @@ public class Sistema extends Observable implements Serializable {
     }
 
     public void agregarUsuario(Usuario usuario) {
-        this.getListaUsuarios().add(usuario);
+        this.listaUsuarios.add(usuario);
+        this.persistencia.escribirUsuarios(this.listaUsuarios);
     }
 
     public boolean registrarUsuario(String nombre, String apellido, String nacionalidad, boolean[] preferencias, boolean[] restricciones, Date nacimiento, String descripcion, Icon icono) {
@@ -254,7 +256,6 @@ public class Sistema extends Observable implements Serializable {
         }
         return retorno;
     }
-
 
     public void agregarSolicitud(Profesional profesional, PlanAlimentacion plan) {
         for (int i = 0; i < this.getListaProfesionales().size(); i++) {
